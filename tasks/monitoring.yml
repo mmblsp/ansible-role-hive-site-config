@@ -1,0 +1,7 @@
+---
+- name: Set monitoring config to hive-site.xml
+  set_fact:
+    hive_site_conf: >
+      {{ hive_site_conf | combine({
+        'hive.metastore.metrics.enabled': true,'hive.server2.metrics.enabled': true
+      })}}

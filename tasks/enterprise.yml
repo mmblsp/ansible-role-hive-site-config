@@ -1,0 +1,3 @@
+---
+- name: Include enterprise variable
+  include_vars: enterprise.yml

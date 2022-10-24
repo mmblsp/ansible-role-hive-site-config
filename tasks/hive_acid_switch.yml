@@ -1,0 +1,18 @@
+---
+- name: Set hive_acid_switch = false
+  set_fact:
+    hive_site_conf: >
+      {{ hive_site_conf | combine({
+        'hive.txn.manager': 'org.apache.hadoop.hive.ql.lockmgr.DummyTxnManager',
+        'hive.support.concurrency': False })
+      }}
+    when: not hive_acid_switch
+
+- name: Set hive_acid_switch = false
+  set_fact:
+    hive_site_conf: >
+      {{ hive_site_conf | combine({
+        'hive.txn.manager': 'org.apache.hadoop.hive.ql.lockmgr.DbTxnManager',
+        'hive.support.concurrency': True })
+      }}
+    when: hive_acid_switch

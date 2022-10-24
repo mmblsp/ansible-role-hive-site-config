@@ -1,0 +1,32 @@
+---
+- name: Set monitoring to variable
+  include_tasks: monitoring.yml
+  when: hive_site_services_monitoring
+
+- name: Set database config
+  include_tasks: database.yml
+  when: hive_site_db is defined
+
+- name: Set hive_acid_switch config
+  include_tasks: hive_acid_switch.yml
+
+- name: Set hive_site_custom config
+  include_tasks: hive_site_custom.yml
+  when: hive_site_custom is defined
+
+- name: Set hive.tez.container.size
+  include_tasks: hive_tez_container_size.yml
+  when: hive_site_conf['have.this.container.size'] is not defined
+
+- name: Set enterprise edition
+  include_tasks: enterprise.yml
+  when: cluster_edition == 'enterprise'
+
+
+- name: Generating a hive-site.xml file from a template
+  template:
+    src: hive-site.xml.j2
+    dest: "{{ hive_site_xml_path }}"
+    backup: yes
+    mode: "644"
+  notify: (Handler) hive-site.conf changed

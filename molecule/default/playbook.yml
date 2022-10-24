@@ -1,0 +1,25 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: Create
+      file:
+        path: "{{ hive_site_xml_path }}"
+        state: directory
+        recurse: yes
+        mode: "644"
+  roles:
+    - role: generate_hive_site_xml
+      vars:
+        hive_site_conf:
+          have.this.container.size: "1"
+
+        hive_site_db:
+          # db_hostname: 'localhost1'
+          # db_port: 5434
+          db_connection_driver_name: "org.postgresql.Driver"
+          # com.mysql.jdbc.Driver
+        hive_site_services_monitoring: true
+        # hive_site_custom:
+        #   a: '1111'
+        #   b: 'qwqwqw'

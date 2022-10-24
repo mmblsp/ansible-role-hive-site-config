@@ -1,0 +1,21 @@
+---
+- name: Assert valid db_connection_driver_name
+  assert:
+    that: "{{ hive_site_db.db_connection_driver_name|regex_search('\\W\\w+\\W')|regex_replace('\\W', '') in ['mysql', 'postgresql'] }}"
+    fail_msg: "ERROR: Value Error Connection Driver {{ hive_site_db.db_connection_driver_name }}"
+
+- name: Import vars for database config
+  include_vars:
+    file: "{{ hive_site_db.db_connection_driver_name|regex_search('\\W\\w+\\W')|regex_replace('\\W', '') }}.yml"
+    name: db
+
+- name: Set database config to hive-site.xml
+  set_fact:
+    hive_site_conf: >
+      {{ hive_site_conf | combine({
+        'javax.jdo.option.ConnectionURL': db.db_connection_prefix_url
+          + hive_site_db.db_hostname | default(db.db_hostname)
+          + ':' + hive_site_db.db_port|default(db.db_port)|string
+          + '/' + db.db_database
+        })
+      }}

@@ -1,0 +1,7 @@
+- name: Assert Value is dict
+  assert:
+    that: hive_site_custom is mapping
+
+- name: Set hive_site_custom
+  set_fact:
+    hive_site_conf: "{{ hive_site_conf | combine(hive_site_custom) }}"

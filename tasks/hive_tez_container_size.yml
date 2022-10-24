@@ -1,0 +1,6 @@
+- name: Error value
+  fail:
+    msg: >-
+      ERROR: the value of the have.this.container.size variable is missing.
+      The value must match the value in the yarn.scheduler.minimum-allocation-mb variable
+      'hive.tez.container.size' : services.yarn.config.yarn_site['yarn.scheduler.minimum-allocation-mb']

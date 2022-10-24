@@ -1,0 +1,6 @@
+---
+# handlers file for generate-hdfs-site-xml
+- name: (Handler) hive-site.conf changed
+  debug:
+    msg: "hive-site.conf changed triggered"
+  listen: hive_site_conf_changed

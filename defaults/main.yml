@@ -1,0 +1,23 @@
+---
+hive_site_conf: {}
+
+# configuration database
+hive_site_db:
+  # db_hostname: localhost1
+  # db_port: 5433
+  db_connection_driver_name: 'com.mysql.jdbc.Driver'
+  # db_connection_prefix_url: 'jdbc:postgresql://'
+  # db_database: 'hive'
+
+cluster_edition_enterprise: false
+
+hive_site_services_monitoring: false
+
+hive_acid_switch: false
+
+# TODO: подумать на предмет декомпозиции пути к файлу, передавать отдельно из вызывающей роли 
+hive_site_xml_path: '/etc/hive/hive-site.conf'
+
+# hive_site_custom: {}
+
+cluster_edition: 'enterprise'
